@@ -11,18 +11,13 @@ const port = process.env.SERVER_PORT || 3031;
 //global middlewares
 app.use(express.json());
 
+// app.get("/", (req, res) => {
+//   console.log("inside default route");
+//   res.status(200).send("hello!");
+// });
+
 //routes
 app.use("/auth", authRoute);
-
-// app.get("/", (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     console.log("inside try");
-//     throw new Error("my error!");
-//   } catch (e) {
-//     console.log("inside catch");
-//     next(e);
-//   }
-// });
 
 //connect to db
 try {

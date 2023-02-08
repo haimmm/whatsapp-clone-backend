@@ -3,16 +3,18 @@ import { getUserBy, addUser } from "../services/user.service";
 import { ServerError } from "../middlewares/errorHandler";
 import bcrypt from "../modules/bcrypt.module";
 import statusCodes from "../utils/httpStatusCodes";
-import { dataType, responseType } from "../utils/asyncRouteWrapper";
+import { DataType, ResponseType } from "../utils/asyncRouteWrapper";
 
-export const register = async (
-  req: Request
-): Promise<responseType | dataType> => {
+export const register = async (req: Request): Promise<ResponseType> => {
   const { email } = req.body;
   const isUserExists = await getUserBy("email", email);
 
   if (isUserExists) {
-    throw new ServerError("This email is taken", statusCodes.CONFLICT);
+    throw new ServerError({
+      source: "controller/auth/register",
+      message: "This email is taken",
+      code: statusCodes.CONFLICT,
+    });
   }
 
   req.body.email = email.toLowerCase();
@@ -20,16 +22,20 @@ export const register = async (
   await addUser(req.body);
   return {
     data: "success",
-    status: 201,
+    status: statusCodes.CREATED,
   };
 };
 
-export const login = async (req: Request): Promise<responseType | dataType> => {
+export const login = async (req: Request): Promise<DataType> => {
   const user = await getUserBy("email", req.body.email);
   if (!user || !bcrypt.compare(req.body.password, user.password)) {
-    throw new ServerError("Wrong email or password", statusCodes.FORBIDDEN);
+    throw new ServerError({
+      source: "controller/auth/login",
+      message: "Wrong email or password",
+      code: statusCodes.FORBIDDEN,
+    });
   }
-  //delete user.password;
+
   const { password, ...noPasswordUser } = user;
   console.log("user Logged in ! ", user);
   return noPasswordUser;

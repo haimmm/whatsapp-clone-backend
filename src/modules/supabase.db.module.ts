@@ -1,9 +1,5 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-export type allOptional<Type> = {
-  [Property in keyof Type]+?: Type[Property];
-};
-
 export type createType = usersTable;
 
 export type usersTable = {

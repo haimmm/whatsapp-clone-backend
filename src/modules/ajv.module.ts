@@ -13,11 +13,8 @@ addFormats(ajv);
  * 8-15 characters long
  */
 ajv.addFormat("password", (value) => {
-  const PASSWORD_RULES = ["[A-Z]", "[a-z]", "\\d", "^\\w{8,15}$"];
-  for (const rule of PASSWORD_RULES) {
-    if (!new RegExp(rule).test(value)) return false;
-  }
-  return true;
+  const pattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*]{8,15}$";
+  return new RegExp(pattern).test(value);
 });
 
 export default ajv;

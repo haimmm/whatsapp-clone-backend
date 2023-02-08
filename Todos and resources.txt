@@ -2,8 +2,8 @@ storage and db services - https://app.supabase.com
 
 structure::
     /auth:
-        /register
-        /login
+        /register - in progress
+        /login - in progress
         /refresh
     /user:
         /updateSettings
