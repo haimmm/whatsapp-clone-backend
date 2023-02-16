@@ -1,4 +1,5 @@
 import supabase, { usersTable } from "../modules/supabase.db.module";
+import { ServerError } from "../middlewares/errorHandler";
 
 /* get by id or email */
 interface GetByOptions {
@@ -15,24 +16,18 @@ export const getUserBy = async <K extends keyof GetByOptions>(
     .from<string, usersTable>("users")
     .select<string, usersTable>()
     .eq(col, val);
-  if (error)
-    throw new Error(
-      `[supabase error] details:${error.details}, message:${error.message}`
-    );
+  if (error) throw new ServerError({ details: error });
   if (data.length > 1)
-    throw new Error(
-      `[supabase] db conflict - 2 user records with same id or email`
-    );
+    throw new ServerError({
+      details: "critical conflict - quering for 1 user returned many",
+    });
   return data[0];
 };
 
 export const addUser = async (user: usersTable): Promise<void> => {
   const db = supabase.getClient();
   const { error } = await db.from("users").insert(user);
-  if (error)
-    throw new Error(
-      `[supabase error] details:${error.details}, message:${error.message}`
-    );
+  if (error) throw new ServerError({ details: error });
 };
 
 export const updateUser = async (
@@ -41,8 +36,5 @@ export const updateUser = async (
 ): Promise<void> => {
   const db = supabase.getClient();
   const { error } = await db.from("users").update(updates).eq("id", id);
-  if (error)
-    throw new Error(
-      `[supabase error] details:${error.details}, message:${error.message}`
-    );
+  if (error) throw new ServerError({ details: error });
 };

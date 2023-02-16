@@ -11,7 +11,6 @@ export const register = async (req: Request): Promise<ResponseType> => {
 
   if (isUserExists) {
     throw new ServerError({
-      source: "controller/auth/register",
       message: "This email is taken",
       code: statusCodes.CONFLICT,
     });
@@ -30,7 +29,6 @@ export const login = async (req: Request): Promise<DataType> => {
   const user = await getUserBy("email", req.body.email);
   if (!user || !bcrypt.compare(req.body.password, user.password)) {
     throw new ServerError({
-      source: "controller/auth/login",
       message: "Wrong email or password",
       code: statusCodes.FORBIDDEN,
     });

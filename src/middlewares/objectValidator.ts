@@ -11,10 +11,7 @@ const validator = <T>(schema: JSONSchemaType<T>) => {
     if (valid) {
       next();
     } else {
-      throw new ServerError({
-        source: "objectValidator",
-        details: validator.errors,
-      });
+      next(new ServerError({ details: validator.errors }));
     }
   };
 };
