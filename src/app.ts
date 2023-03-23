@@ -3,10 +3,12 @@ import { errorHandler } from "./middlewares/errorHandler";
 import dotenv from "dotenv";
 import authRoute from "./routes/auth.route";
 import db from "./modules/supabase.db.module";
+import { createSocket } from "./modules/socketIO.module";
 
 const app = express();
 dotenv.config();
 const port = process.env.SERVER_PORT || 3031;
+const socket = createSocket(app);
 
 //global middlewares
 app.use(express.json());
@@ -32,6 +34,6 @@ try {
 app.use(errorHandler);
 
 //listening
-app.listen(port, () => {
+socket.listen(port, () => {
   console.log(`express server listening on port ${port}...`);
 });
