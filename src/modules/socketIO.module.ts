@@ -4,7 +4,8 @@ import { Server } from "socket.io";
 
 type MessageType = {
   content: string;
-  id?: string;
+  id: string;
+  isMyMessage: boolean;
 };
 
 export function createSocket(app: Express) {
@@ -22,6 +23,7 @@ export function createSocket(app: Express) {
       const messageToSend: MessageType = {
         content: message,
         id: crypto.randomUUID(),
+        isMyMessage: false,
       };
       socket.broadcast.emit("recieve-message", messageToSend); // send everyoneone except sender
     });

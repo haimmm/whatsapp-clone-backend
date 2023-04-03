@@ -23,9 +23,7 @@ app.use("/auth", authRoute);
 
 //connect to db
 try {
-  console.log("connecting to supabase...");
   db.connect();
-  console.log("supabase connected succesfully");
 } catch (e) {
   console.error("failed to connect to supabse with the following error: " + e);
 }

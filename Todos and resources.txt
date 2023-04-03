@@ -1,17 +1,28 @@
 storage and db services - https://app.supabase.com
 
-structure::
+structure and routes progress:
     /auth:
-        /register - in progress
-        /login - in progress
-        /refresh
+        /register - done 3.4.23 by Haim
+        /login - done 3.4.23 by Haim
+        /refresh 
     /user:
-        /updateSettings
         /getOnlineUsers
+        /updateSettings
     /chat:
-        /getMessagesByChatId
-        /sendMessageByChatId
+        /sendMessage
+        /getConversation
         /createNewChat
 
+general tasks: 
+- continue work on modules/socketIO to support 1 on 1 conversation (high priority)
+- move all the type objects to dedicated files
+- implement testing library (jest?)
+- extend socketio to support groups
+- implement supabase storage functunality to store profile pictures and sending files
+- implement message deviliry indicator: 
+        1 clock        -> sending...
+        1 tick  (grey) -> The message was successfully sent.
+        2 ticks (grey) -> The message was successfully delivered to the recipient's chat.
+        2 ticks (blue) -> The recipient has read your message.
 
 

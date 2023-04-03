@@ -2,21 +2,27 @@ import supabase, { usersTable } from "../modules/supabase.db.module";
 import * as dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/../../.env" });
 import {
-  GetByOptions,
-  getUserBy,
-  addUser,
-  updateUser,
-} from "../services/user.service";
+  addSession,
+  getSessionBy,
+  removeSession,
+  createNewCookie,
+} from "../services/auth.service";
 
 //uncomment each function to test it
 
 (async () => {
   try {
     supabase.connect();
-    const data = await getUserBy("id", 1);
+    const dummySession = {
+      user_id: 1,
+      access_token: "access_token_dummy",
+      refresh_token: "refresh_token_dummy",
+    };
+
+    //const data = await addSession(dummySession);
+    // const data = await getSessionBy("id", 1);
+    const data = await removeSession(1);
     console.log("returned data: ", data);
-    //addUser({ email: "tester2@gmail.com", name: "tester2", password: "123123" });
-    //updateUser(2, { name: "tester3" });
   } catch (e) {
     console.error("user service failed: " + e);
   }
@@ -24,5 +30,5 @@ import {
 
 /**
  * to run as stand alone run the following command from test's folder:
- * npx ts-node user.service.test.ts
+ * npx ts-node auth.service.test.ts
  **/

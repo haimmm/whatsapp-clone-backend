@@ -2,7 +2,7 @@ import supabase, { usersTable } from "../modules/supabase.db.module";
 import { ServerError } from "../middlewares/errorHandler";
 
 /* get by id or email */
-interface GetByOptions {
+export interface GetByOptions {
   id: number;
   email: string;
 }
