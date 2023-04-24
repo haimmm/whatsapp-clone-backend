@@ -1,11 +1,10 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-/**     --- TABLES TYPES ---
- * ids declred as optional (?) because it's auto created by db
- **/
+//     --- TABLES TYPES ---
 
 export type usersTable = {
-  id?: number;
+  id?: number; // auto created in db
+  token?: string; // assigned on session creation
   email: string;
   name: string;
   password: string;

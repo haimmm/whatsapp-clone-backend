@@ -12,7 +12,7 @@ router.post(
   asyncRouteWrapper(register)
 );
 
-//router.post("/login", asyncRouteWrapper(login));
+router.post("/login", asyncRouteWrapper(login));
 
 //TODO : WHEN WE INTEGRATE TOKENS
 //router.post("/refresh");

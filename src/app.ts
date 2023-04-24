@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoute from "./routes/auth.route";
 import db from "./modules/supabase.db.module";
 import { createSocket } from "./modules/socketIO.module";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -12,11 +13,19 @@ const socket = createSocket(app);
 
 //global middlewares
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    //methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    //credentials: true,
+  })
+);
 
-// app.get("/", (req, res) => {
-//   console.log("inside default route");
-//   res.status(200).send("hello!");
-// });
+app.get("/", (req, res, next) => {
+  console.log("inside default route");
+  res.status(200).send({ data: "hello" });
+  //next("custom error");
+});
 
 //routes
 app.use("/auth", authRoute);

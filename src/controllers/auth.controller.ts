@@ -72,6 +72,7 @@ export const login = async (
     user_id: user.id as number,
   });
 
+  user.token = access_token;
   const { password, ...noPasswordUser } = user;
   console.log("New user Logged in ! ", noPasswordUser);
   return noPasswordUser;
